@@ -1,6 +1,7 @@
 import re
 from fastapi_service.db.supabase_client import fetch_one, fetch_many, insert, update, get_client
 from fastapi_service.services.openai_service import complete
+from fastapi_service.services.notification_service import notify
 from fastapi_service.utils.prompt_builder import chapter_prompt, chapter_regeneration_prompt, summary_prompt
 
 
@@ -81,6 +82,11 @@ def generate_all_chapters(book_id: str) -> dict:
         chapter_notes_status = existing.get("chapter_notes_status", "no") if existing else "no"
 
         if chapter_notes_status == "yes":
+            notify(book_id, "waiting_for_notes", {
+                "stage": "Chapter",
+                "chapter_number": meta["chapter_number"],
+                "chapter_title": meta["title"],
+            })
             results.append({
                 "chapter_number": meta["chapter_number"],
                 "status": "paused - waiting for editor notes",
@@ -125,6 +131,11 @@ def generate_all_chapters(book_id: str) -> dict:
             })
             chapter_id = record["id"]
 
+        notify(book_id, "chapter_ready", {
+            "chapter_number": meta["chapter_number"],
+            "chapter_title": meta["title"],
+        })
+
         results.append({
             "chapter_number": meta["chapter_number"],
             "chapter_id": chapter_id,
@@ -168,6 +179,11 @@ def regenerate_chapter(book_id: str, chapter_id: str) -> dict:
         "status": "draft",
         "chapter_notes": None,
         "chapter_notes_status": "no_notes_needed",
+    })
+
+    notify(book_id, "chapter_regenerated", {
+        "chapter_number": chapter["chapter_number"],
+        "chapter_title": chapter["title"],
     })
 
     return {

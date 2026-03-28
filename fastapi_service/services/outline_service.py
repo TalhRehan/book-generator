@@ -1,5 +1,6 @@
 from fastapi_service.db.supabase_client import fetch_one, insert, update
 from fastapi_service.services.openai_service import complete
+from fastapi_service.services.notification_service import notify
 from fastapi_service.utils.prompt_builder import outline_prompt, outline_regeneration_prompt
 
 
@@ -10,16 +11,17 @@ def generate_outline(book_id: str) -> dict:
         raise ValueError(f"Book not found: {book_id}")
 
     if not book.get("notes_on_outline_before"):
+        notify(book_id, "waiting_for_notes", {"stage": "Outline", "reason": "notes_on_outline_before is empty"})
         raise ValueError("Cannot generate outline without notes_on_outline_before.")
 
     status = book.get("status_outline_notes", "no")
     if status == "yes":
+        notify(book_id, "waiting_for_notes", {"stage": "Outline", "reason": "Awaiting editor review"})
         raise ValueError("Outline is awaiting editor review. Add notes or set status to no_notes_needed.")
 
     prompt = outline_prompt(book["title"], book["notes_on_outline_before"])
     outline_text = complete(prompt, max_tokens=2000)
 
-    # store versioned outline
     existing_versions = _get_latest_version(book_id)
     new_version = existing_versions + 1
 
@@ -34,6 +36,8 @@ def generate_outline(book_id: str) -> dict:
         "outline": outline_text,
         "book_output_status": "in_progress",
     })
+
+    notify(book_id, "outline_ready", {"version": new_version, "title": book["title"]})
 
     return {
         "book_id": book_id,
@@ -75,6 +79,8 @@ def regenerate_outline(book_id: str) -> dict:
         "outline": revised_outline,
         "notes_on_outline_after": None,
     })
+
+    notify(book_id, "outline_regenerated", {"version": new_version, "title": book["title"]})
 
     return {
         "book_id": book_id,
