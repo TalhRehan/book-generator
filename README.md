@@ -249,6 +249,3 @@ book_generator/
 └── README.md
 ```
 
-
-APP_ENV=development
-```
