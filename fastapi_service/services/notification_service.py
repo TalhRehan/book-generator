@@ -12,9 +12,9 @@ EVENTS = {
     "outline_regenerated":  "Outline Has Been Regenerated",
     "chapter_ready":        "Chapter Ready for Review",
     "chapter_regenerated":  "Chapter Has Been Regenerated",
-    "waiting_for_notes":    "Pipeline Paused — Waiting for Editor Notes",
+    "waiting_for_notes":    "Pipeline Paused - Waiting for Editor Notes",
     "final_draft_ready":    "Final Draft Compiled Successfully",
-    "pipeline_error":       "Pipeline Error — Action Required",
+    "pipeline_error":       "Pipeline Error - Action Required",
 }
 
 
@@ -69,7 +69,7 @@ def _send_teams(subject: str, body: str, book_id: str):
         "themeColor": "0076D7",
         "summary": subject,
         "sections": [{
-            "activityTitle": f"?? Book Generator — {subject}",
+            "activityTitle": f"?? Book Generator ï¿½ {subject}",
             "activityText": body.replace("\n", "<br>"),
             "facts": [
                 {"name": "Book ID", "value": book_id},
