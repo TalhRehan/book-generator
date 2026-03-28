@@ -249,18 +249,6 @@ book_generator/
 └── README.md
 ```
 
----
 
-## Environment Variables
-```env
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_KEY=your-service-role-key
-OPENAI_API_KEY=sk-your-openai-key
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=your-email@gmail.com
-SMTP_PASS=your-app-password
-NOTIFY_EMAIL=editor@yourdomain.com
-TEAMS_WEBHOOK_URL=https://your-teams-webhook-url
 APP_ENV=development
 ```
