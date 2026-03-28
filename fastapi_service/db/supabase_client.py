@@ -30,7 +30,7 @@ def fetch_one(table: str, filters: dict) -> dict | None:
         get_client()
         .table(table)
         .select("*")
-        .match(filters)   # ✅ correct & clean
+        .match(filters)   
         .limit(1)
         .execute()
     )
@@ -46,7 +46,7 @@ def fetch_many(
     query = get_client().table(table).select("*")
 
     if filters:
-        query = query.match(filters)  # ✅ safer than looping eq
+        query = query.match(filters)  
 
     if order_by:
         query = query.order(order_by)
@@ -61,7 +61,7 @@ def update(table: str, filters: dict, data: dict) -> dict:
         get_client()
         .table(table)
         .update(data)
-        .match(filters)   # ✅ IMPORTANT: after update()
+        .match(filters)   
         .execute()
     )
     return response.data[0] if response.data else {}
