@@ -1,3 +1,5 @@
+"""Service-layer business logic for the book generation workflow."""
+
 import time
 from openai import OpenAI
 from fastapi_service.core.config import settings
@@ -9,6 +11,7 @@ RETRY_DELAY = 2  # seconds
 
 
 def complete(prompt: str, max_tokens: int = 3000) -> str:
+    """Complete."""
     last_error = None
 
     for attempt in range(MAX_RETRIES):

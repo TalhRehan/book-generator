@@ -1,3 +1,5 @@
+"""Pydantic schemas shared across API and service layers."""
+
 from pydantic import BaseModel
 from typing import Optional
 

@@ -1,9 +1,12 @@
+"""Utility helpers used by the book generation system."""
+
 from docx import Document
 from docx.shared import Pt, Inches, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 
 def build_docx(title: str, chapters: list[dict], output_path: str):
+    """Build docx."""
     doc = Document()
 
     # page margins

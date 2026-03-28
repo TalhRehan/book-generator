@@ -1,3 +1,5 @@
+"""Utility helpers used by the book generation system."""
+
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
@@ -7,6 +9,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
 
 
 def build_pdf(title: str, chapters: list[dict], output_path: str):
+    """Build pdf."""
     doc = SimpleDocTemplate(
         output_path,
         pagesize=A4,

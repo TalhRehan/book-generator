@@ -1,3 +1,5 @@
+"""Service-layer business logic for the book generation workflow."""
+
 import smtplib
 import json
 import urllib.request
@@ -19,6 +21,7 @@ EVENTS = {
 
 
 def notify(book_id: str, event: str, extra: dict = None):
+    """Notify."""
     subject = EVENTS.get(event, event)
     body = _build_body(subject, book_id, extra)
 
@@ -28,6 +31,7 @@ def notify(book_id: str, event: str, extra: dict = None):
 
 
 def _build_body(subject: str, book_id: str, extra: dict = None) -> str:
+    """Build body."""
     lines = [
         f"Event: {subject}",
         f"Book ID: {book_id}",
@@ -42,6 +46,7 @@ def _build_body(subject: str, book_id: str, extra: dict = None) -> str:
 
 
 def _send_email(subject: str, body: str):
+    """Send email."""
     try:
         msg = MIMEMultipart()
         msg["From"] = settings.smtp_user
@@ -60,6 +65,7 @@ def _send_email(subject: str, body: str):
 
 
 def _send_teams(subject: str, body: str, book_id: str):
+    """Send teams."""
     if not settings.teams_webhook_url:
         return
 
@@ -93,6 +99,7 @@ def _send_teams(subject: str, body: str, book_id: str):
 
 
 def _log(book_id: str, event: str, extra: dict = None):
+    """Log."""
     try:
         insert("notifications_log", {
             "book_id": book_id,

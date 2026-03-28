@@ -1,3 +1,5 @@
+"""Connectivity and CRUD smoke test for Supabase integration."""
+
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../.."))
@@ -5,6 +7,7 @@ from fastapi_service.db.supabase_client import insert, fetch_one, update
 from fastapi_service.core.config import settings
 
 def run():
+    """Run."""
     print("Checking Supabase connection...")
 
     record = insert("books", {

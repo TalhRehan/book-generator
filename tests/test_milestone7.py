@@ -1,3 +1,5 @@
+"""Test script for test milestone7."""
+
 import sys
 import os
 
@@ -9,6 +11,7 @@ BOOK_ID = "199c4a46-f88c-4ea4-92ec-40f16ed284ea"
 
 
 def test_compile():
+    """Test compile."""
     result = compile_book(BOOK_ID)
     print(f"Status   : {result['status']}")
     print(f"Title    : {result['title']}")

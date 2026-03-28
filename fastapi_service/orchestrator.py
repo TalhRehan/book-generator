@@ -1,3 +1,5 @@
+"""Polling orchestrator that drives the end-to-end book generation pipeline."""
+
 import time
 from fastapi_service.db.supabase_client import fetch_many, fetch_one, update, get_client
 from fastapi_service.services.input_parser import parse_excel
@@ -13,6 +15,7 @@ POLL_INTERVAL = 60
 
 
 def load_books_from_excel():
+    """Load books from excel."""
     rows = parse_excel(EXCEL_PATH)
     new_count = 0
 
@@ -36,6 +39,7 @@ def load_books_from_excel():
 
 
 def process_pending_books():
+    """Process pending books."""
     client = get_client()
     books = (
         client.table("books")
@@ -60,6 +64,7 @@ def process_pending_books():
 
 
 def process_outline_approved_books():
+    """Process outline approved books."""
     client = get_client()
     books = (
         client.table("books")
@@ -102,6 +107,7 @@ def process_outline_approved_books():
 
 
 def process_chapters_with_notes():
+    """Process chapters with notes."""
     client = get_client()
     chapters = (
         client.table("chapters")
@@ -123,6 +129,7 @@ def process_chapters_with_notes():
 
 
 def process_ready_for_compilation():
+    """Process ready for compilation."""
     client = get_client()
     books = (
         client.table("books")
@@ -155,6 +162,7 @@ def process_ready_for_compilation():
 
 
 def _countdown(seconds: int):
+    """Countdown."""
     for remaining in range(seconds, 0, -1):
         print(f"\r  Next cycle in {remaining}s...", end="", flush=True)
         time.sleep(1)
@@ -162,6 +170,7 @@ def _countdown(seconds: int):
 
 
 def run_once():
+    """Run once."""
     load_books_from_excel()
     process_pending_books()
     process_outline_approved_books()
@@ -170,6 +179,7 @@ def run_once():
 
 
 def run_loop():
+    """Run loop."""
     print("=" * 50)
     print("   Book Generation Orchestrator — Started")
     print("=" * 50)

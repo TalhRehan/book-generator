@@ -1,3 +1,5 @@
+"""Test script for test milestone5."""
+
 import sys
 import os
 
@@ -10,6 +12,7 @@ BOOK_ID = "5a2d3c05-e2c5-4280-94ca-1fa1c10cd6ff"
 
 
 def test_generate_chapters():
+    """Test generate chapters."""
     result = generate_all_chapters(BOOK_ID)
     print(f"Chapters processed: {len(result['chapters'])}")
     for ch in result["chapters"]:
@@ -17,6 +20,7 @@ def test_generate_chapters():
 
 
 def test_regenerate_chapter():
+    """Test regenerate chapter."""
     chapters = fetch_many("chapters", {"book_id": BOOK_ID}, order_by="chapter_number")
 
     if not chapters:

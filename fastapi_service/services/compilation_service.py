@@ -1,3 +1,5 @@
+"""Service-layer business logic for the book generation workflow."""
+
 import os
 from fastapi_service.db.supabase_client import fetch_one, fetch_many, update, get_client
 from fastapi_service.utils.docx_builder import build_docx
@@ -8,6 +10,7 @@ OUTPUT_DIR = "output"
 
 
 def compile_book(book_id: str) -> dict:
+    """Compile book."""
     book = fetch_one("books", {"id": book_id})
 
     if not book:
@@ -66,6 +69,7 @@ def compile_book(book_id: str) -> dict:
 
 
 def _upload_to_supabase(book_id: str, file_path: str, file_name: str) -> str | None:
+    """Upload to supabase."""
     try:
         client = get_client()
         bucket = "book-outputs"
@@ -90,6 +94,7 @@ def _upload_to_supabase(book_id: str, file_path: str, file_name: str) -> str | N
 
 
 def _get_content_type(file_name: str) -> str:
+    """Get content type."""
     if file_name.endswith(".pdf"):
         return "application/pdf"
     if file_name.endswith(".docx"):

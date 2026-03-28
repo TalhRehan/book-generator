@@ -1,3 +1,5 @@
+"""FastAPI route handlers for this API module."""
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from fastapi_service.services.outline_service import generate_outline, regenerate_outline
@@ -11,6 +13,7 @@ class OutlineRequest(BaseModel):
 
 @router.post("/outline/generate")
 def generate(req: OutlineRequest):
+    """Generate."""
     try:
         result = generate_outline(req.book_id)
         return result
@@ -22,6 +25,7 @@ def generate(req: OutlineRequest):
 
 @router.post("/outline/regenerate")
 def regenerate(req: OutlineRequest):
+    """Regenerate."""
     try:
         result = regenerate_outline(req.book_id)
         return result

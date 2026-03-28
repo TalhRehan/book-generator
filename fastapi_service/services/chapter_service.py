@@ -1,3 +1,5 @@
+"""Service-layer business logic for the book generation workflow."""
+
 import re
 from fastapi_service.db.supabase_client import fetch_one, fetch_many, insert, update, get_client
 from fastapi_service.services.openai_service import complete
@@ -6,6 +8,7 @@ from fastapi_service.utils.prompt_builder import chapter_prompt, chapter_regener
 
 
 def parse_chapters_from_outline(outline_text: str) -> list[dict]:
+    """Parse chapters from outline."""
     chapters = []
     lines = outline_text.split("\n")
     current = None
@@ -34,6 +37,7 @@ def parse_chapters_from_outline(outline_text: str) -> list[dict]:
 
 
 def get_previous_summaries(book_id: str, before_chapter_number: int) -> str:
+    """Get previous summaries."""
     chapters = fetch_many("chapters", {"book_id": book_id}, order_by="chapter_number")
     relevant = [
         ch for ch in chapters
@@ -51,6 +55,7 @@ def get_previous_summaries(book_id: str, before_chapter_number: int) -> str:
 
 
 def generate_all_chapters(book_id: str) -> dict:
+    """Generate all chapters."""
     book = fetch_one("books", {"id": book_id})
 
     if not book:
@@ -146,6 +151,7 @@ def generate_all_chapters(book_id: str) -> dict:
 
 
 def regenerate_chapter(book_id: str, chapter_id: str) -> dict:
+    """Regenerate chapter."""
     book = fetch_one("books", {"id": book_id})
     chapter = fetch_one("chapters", {"id": chapter_id})
 
@@ -194,6 +200,7 @@ def regenerate_chapter(book_id: str, chapter_id: str) -> dict:
 
 
 def _get_existing_chapter(book_id: str, chapter_number: int) -> dict | None:
+    """Get existing chapter."""
     client = get_client()
     response = (
         client.table("chapters")

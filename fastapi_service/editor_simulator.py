@@ -1,8 +1,11 @@
+"""Editor simulator that auto-reviews outlines, chapters, and final readiness."""
+
 import time
 from fastapi_service.db.supabase_client import fetch_one, fetch_many, update, get_client
 
 
 def check_and_approve_outline(book_id: str):
+    """Check and approve outline."""
     book = fetch_one("books", {"id": book_id})
 
     if not book:
@@ -33,6 +36,7 @@ def check_and_approve_outline(book_id: str):
 
 
 def check_and_approve_chapters(book_id: str):
+    """Check and approve chapters."""
     chapters = fetch_many("chapters", {"book_id": book_id}, order_by="chapter_number")
 
     if not chapters:
@@ -66,6 +70,7 @@ def check_and_approve_chapters(book_id: str):
 
 
 def check_and_approve_final(book_id: str):
+    """Check and approve final."""
     book = fetch_one("books", {"id": book_id})
 
     if not book:
@@ -91,6 +96,7 @@ def check_and_approve_final(book_id: str):
 
 
 def run_editor_cycle():
+    """Run editor cycle."""
     client = get_client()
 
     # find all active books
@@ -115,6 +121,7 @@ def run_editor_cycle():
 
 
 def run_loop():
+    """Run loop."""
     print("Editor simulator running...")
     while True:
         try:

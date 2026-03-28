@@ -1,3 +1,5 @@
+"""Test script for test milestone4."""
+
 import sys
 import os
 
@@ -12,6 +14,7 @@ BOOK_ID = "5a2d3c05-e2c5-4280-94ca-1fa1c10cd6ff"
 
 
 def test_generate():
+    """Test generate."""
     result = generate_outline(BOOK_ID)
     assert result["outline"]
     assert result["version"] == 1
@@ -20,6 +23,7 @@ def test_generate():
 
 
 def test_regenerate():
+    """Test regenerate."""
     # simulate editor adding revision notes
     update("books", {"id": BOOK_ID}, {
         "notes_on_outline_after": "Add a chapter specifically about time-blocking techniques."

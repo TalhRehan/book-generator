@@ -1,4 +1,7 @@
+"""Utility helpers used by the book generation system."""
+
 def outline_prompt(title: str, notes: str) -> str:
+    """Outline prompt."""
     return f"""You are a professional book planner and editor.
 
 Create a detailed book outline for a book titled: "{title}"
@@ -28,6 +31,7 @@ Be specific, structured, and aligned with the editor's notes."""
 
 
 def outline_regeneration_prompt(title: str, original_outline: str, new_notes: str) -> str:
+    """Outline regeneration prompt."""
     return f"""You are a professional book editor refining an existing outline.
 
 Book title: "{title}"
@@ -50,6 +54,7 @@ def chapter_prompt(
     previous_summaries: str,
     chapter_notes: str = None
 ) -> str:
+    """Chapter prompt."""
     notes_section = f"\nEditor notes for this chapter:\n{chapter_notes}" if chapter_notes else ""
 
     context_section = (
@@ -83,6 +88,7 @@ def chapter_regeneration_prompt(
     revision_notes: str,
     previous_summaries: str
 ) -> str:
+    """Chapter regeneration prompt."""
     context_section = (
         f"\nContext from previous chapters:\n{previous_summaries}"
         if previous_summaries
@@ -102,6 +108,7 @@ Rewrite the chapter addressing the editor's notes. Maintain consistency with pre
 
 
 def summary_prompt(chapter_number: int, chapter_title: str, content: str) -> str:
+    """Summary prompt."""
     return f"""Summarize the following chapter in 150 words or less.
 Focus on key events, ideas, and information that would be useful context for writing the next chapter.
 

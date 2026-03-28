@@ -1,3 +1,5 @@
+"""Test script for test full pipeline."""
+
 import sys
 import os
 import time
@@ -15,12 +17,14 @@ EXCEL_PATH = "input/books_input.xlsx"
 
 
 def step(msg):
+    """Step."""
     print(f"\n{'─' * 50}")
     print(f"  {msg}")
     print(f"{'─' * 50}")
 
 
 def run():
+    """Run."""
     step("Stage 1 — Parsing Excel input")
     rows = parse_excel(EXCEL_PATH)
     assert rows, "No rows parsed from Excel"

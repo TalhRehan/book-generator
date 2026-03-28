@@ -1,3 +1,5 @@
+"""Service-layer business logic for the book generation workflow."""
+
 import openpyxl
 from pathlib import Path
 from fastapi_service.api.schemas import BookInputRow
@@ -13,6 +15,7 @@ EXPECTED_COLUMNS = [
 
 
 def parse_excel(file_path: str) -> list[BookInputRow]:
+    """Parse excel."""
     path = Path(file_path)
     if not path.exists():
         raise FileNotFoundError(f"Input file not found: {file_path}")
@@ -45,6 +48,7 @@ def parse_excel(file_path: str) -> list[BookInputRow]:
 
 
 def _clean(value) -> str | None:
+    """Clean."""
     if value is None:
         return None
     cleaned = str(value).strip()

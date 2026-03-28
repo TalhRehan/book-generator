@@ -1,3 +1,5 @@
+"""Service-layer business logic for the book generation workflow."""
+
 from fastapi_service.db.supabase_client import fetch_one, insert, update
 from fastapi_service.services.openai_service import complete
 from fastapi_service.services.notification_service import notify
@@ -5,6 +7,7 @@ from fastapi_service.utils.prompt_builder import outline_prompt, outline_regener
 
 
 def generate_outline(book_id: str) -> dict:
+    """Generate outline."""
     book = fetch_one("books", {"id": book_id})
 
     if not book:
@@ -47,6 +50,7 @@ def generate_outline(book_id: str) -> dict:
 
 
 def regenerate_outline(book_id: str) -> dict:
+    """Regenerate outline."""
     book = fetch_one("books", {"id": book_id})
 
     if not book:
@@ -90,6 +94,7 @@ def regenerate_outline(book_id: str) -> dict:
 
 
 def _get_latest_version(book_id: str) -> int:
+    """Get latest version."""
     client = __import__(
         "fastapi_service.db.supabase_client", fromlist=["get_client"]
     ).get_client()

@@ -1,3 +1,5 @@
+"""FastAPI route handlers for this API module."""
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from fastapi_service.services.compilation_service import compile_book
@@ -11,6 +13,7 @@ class CompileRequest(BaseModel):
 
 @router.post("/compile")
 def compile(req: CompileRequest):
+    """Compile."""
     try:
         result = compile_book(req.book_id)
         return result

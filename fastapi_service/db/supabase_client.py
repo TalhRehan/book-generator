@@ -1,3 +1,5 @@
+"""Supabase data-access helpers and shared client initialization."""
+
 from supabase import create_client, Client
 from fastapi_service.core.config import settings
 from typing import Any
@@ -6,6 +8,7 @@ _client: Client | None = None
 
 
 def get_client() -> Client:
+    """Get client."""
     global _client
     if _client is None:
         _client = create_client(
@@ -16,11 +19,13 @@ def get_client() -> Client:
 
 
 def insert(table: str, data: dict) -> dict:
+    """Insert."""
     response = get_client().table(table).insert(data).execute()
     return response.data[0] if response.data else {}
 
 
 def fetch_one(table: str, filters: dict) -> dict | None:
+    """Fetch one."""
     response = (
         get_client()
         .table(table)
@@ -37,6 +42,7 @@ def fetch_many(
     filters: dict | None = None,
     order_by: str | None = None
 ) -> list:
+    """Fetch many."""
     query = get_client().table(table).select("*")
 
     if filters:
@@ -50,6 +56,7 @@ def fetch_many(
 
 
 def update(table: str, filters: dict, data: dict) -> dict:
+    """Update."""
     response = (
         get_client()
         .table(table)

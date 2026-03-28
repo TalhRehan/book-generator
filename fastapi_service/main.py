@@ -1,3 +1,5 @@
+"""FastAPI application entrypoint and route registration."""
+
 from fastapi import FastAPI
 from fastapi_service.api.routes.input_routes import router as input_router
 from fastapi_service.api.routes.outline_routes import router as outline_router
@@ -14,4 +16,5 @@ app.include_router(compile_router, prefix="/api")
 
 @app.get("/health")
 def health():
+    """Health."""
     return {"status": "ok"}

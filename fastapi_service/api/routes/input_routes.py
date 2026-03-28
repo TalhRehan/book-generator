@@ -1,3 +1,5 @@
+"""FastAPI route handlers for this API module."""
+
 from fastapi import APIRouter, HTTPException
 from fastapi_service.services.input_parser import parse_excel
 from fastapi_service.db.supabase_client import insert, fetch_one
@@ -7,6 +9,7 @@ router = APIRouter()
 
 @router.post("/parse-input")
 def parse_and_store(file_path: str = "input/books_input.xlsx"):
+    """Parse and store."""
     try:
         rows = parse_excel(file_path)
     except (FileNotFoundError, ValueError) as e:

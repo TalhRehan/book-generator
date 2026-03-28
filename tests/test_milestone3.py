@@ -1,3 +1,5 @@
+"""Test script for test milestone3."""
+
 import sys
 import os
 
@@ -8,6 +10,7 @@ from fastapi_service.services.openai_service import complete
 
 
 def test_outline():
+    """Test outline."""
     prompt = outline_prompt(
         title="The Art of Deep Work",
         notes="Focus on practical techniques, real-world examples, and productivity science"
@@ -19,6 +22,7 @@ def test_outline():
 
 
 def test_summary():
+    """Test summary."""
     sample_content = """
     Chapter 1 explored the concept of deep work and why it matters in a distracted world.
     We looked at how knowledge workers can produce more value by focusing intensely.

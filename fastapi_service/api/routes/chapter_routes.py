@@ -1,3 +1,5 @@
+"""FastAPI route handlers for this API module."""
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from fastapi_service.services.chapter_service import generate_all_chapters, regenerate_chapter
@@ -16,6 +18,7 @@ class RegenerateChapterRequest(BaseModel):
 
 @router.post("/chapters/generate")
 def generate(req: GenerateChaptersRequest):
+    """Generate."""
     try:
         result = generate_all_chapters(req.book_id)
         return result
@@ -27,6 +30,7 @@ def generate(req: GenerateChaptersRequest):
 
 @router.post("/chapters/regenerate")
 def regenerate(req: RegenerateChapterRequest):
+    """Regenerate."""
     try:
         result = regenerate_chapter(req.book_id, req.chapter_id)
         return result
